@@ -1,0 +1,63 @@
+
+import {BrowserRouter,Routes,Route,Link,Outlet} from "react-router-dom";
+
+export default function App() {
+
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path = "/page" element = {<Layout/>} >
+          <Route path = "firstpage" element = {<FirstPage/>} />
+          <Route path = "secondpage" element = {<SecondPage/>} />
+        </Route>
+        <Route path = "/" element = {<Home/>} />
+        <Route path = "*" element= {<Error/>} />
+      </Routes>
+    
+    </BrowserRouter>
+      
+  )
+}
+function Home(){
+  return <div>
+    <h1>Home page</h1>
+  </div>
+}
+function Error(){
+  return <div>
+    <h1>Error occurs</h1>
+  </div>
+}
+function Layout(){
+  return(
+  <div style={{height:"100vh",background:"red"}}>
+    <Header/>
+    <div style={{height:"90vh",background:"blue"}}>
+      <Outlet/>
+    </div>
+    
+
+  </div>
+)}
+function Header(){
+  return <>
+      <Link to = "/page/firstpage">First Page </Link>
+      |
+      <Link to = "/page/secondpage">Second page</Link>
+  </>
+}
+
+
+function FirstPage(){
+  return <>
+    <h1>This is first page</h1>
+  </>
+}
+function SecondPage (){
+  return <>
+    <h1>Second Page</h1>
+  </>
+}
+
+
