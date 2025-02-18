@@ -1,0 +1,73 @@
+import { useContext, useState,createContext } from "react";
+
+
+export default function App(){
+  return (
+    <div>
+      <ParentPop/>
+      <Parent/>
+    </div>
+  )
+}
+
+//using pop drilling
+function ParentPop(){
+  const[bulbOn,setBulbon] = useState(true);
+  return(
+    <div>
+      <BulbPop bulbOn={bulbOn}/>
+      <ToggleBulbPop setBulbon={setBulbon}/>
+    </div>
+  )
+}
+function BulbPop({bulbOn}){
+  return(
+    <div>
+      {bulbOn? "bulb is on": "bulb is off"}
+    </div>
+  )
+}
+
+function ToggleBulbPop({setBulbon}){
+  return(
+    <div>
+      <button onClick={()=>{
+        setBulbon(c => !c)
+      }} >Toggle Bulb</button>
+    </div>
+  )
+}
+
+
+//using contex api
+const bulbContex = createContext();
+function Parent(){
+  const[bulbOn,setBulbon] = useState(true);
+
+  return(
+    <div>
+      <bulbContex.Provider value={{bulbOn:bulbOn,setBulbon:setBulbon}}>
+          <Bulb/>
+          <ToggleBulb/>
+      </bulbContex.Provider>
+    </div>
+  )
+}
+function Bulb(){
+  const {bulbOn} =useContext(bulbContex);
+  return(
+    <div>
+      {bulbOn? "bulb is on": "bulb is off"}
+    </div>
+  )
+}
+function ToggleBulb(){
+  const {setBulbon}= useContext(bulbContex);
+  return(
+    <div>
+      <button onClick={()=>{
+        setBulbon(c => !c)
+      }} >Toggle Bulb</button>
+    </div>
+  )
+}
